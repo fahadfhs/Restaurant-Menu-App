@@ -10,10 +10,17 @@
         however here we do meal.1 for the first item in the tuple-->
     {% for meal in meals %}
         <h2> {{ meal.1 }} </h2>
-    {% for row in item_list %} <!-- item_list is a special list in django-->
-        <h3>{{ row.meal}}</h3>
-        <p>{{ row.description}}</p>
-    {% endfor %}
+            {% for row in item_list %} <!-- item_list is a special list in django-->
+                {% if row.meal_type == meal.0 %} <!--display only if the current meal type shown, avoids duplication-->
+                   {% if row.status == 0 %}
+                        <h3><del>{{ row.meal}}</del></h3>
+                        <p>{{ row.description}}</p>
+                    {% else %}
+                        <h3>{{ row.meal}}</h3>
+                        <p>{{ row.description}}</p>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
     {% endfor %}
 </body>
 </html>
