@@ -1,26 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <h1>Restaurant Menu</h1>
-     <!--jinja calls the key for the content of the pizza item
-        however here we do meal.1 for the first item in the tuple-->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1 class="display-4 text-center my-5">Mosaic Flavors Restaurant</h1>
+    <h4>Our Menu</h4>
+
     {% for meal in meals %}
-        <h2> {{ meal.1 }} </h2>
-            {% for row in item_list %} <!-- item_list is a special list in django-->
-                {% if row.meal_type == meal.0 %} <!--display only if the current meal type shown, avoids duplication-->
-                   {% if row.status == 0 %}
-                        <a href="{% url 'menu_item' row.pk %}"><h3><del>{{ row.meal}}</del></h3></a>
-                        <p>{{ row.description}}</p>
-                    {% else %}
-                        <a href="https://example.com"><h3>{{ row.meal}}</h3></a>
-                        <p>{{ row.description}}</p>
-                    {% endif %}
-                {% endif %}
-            {% endfor %}
+    <h2 class="display-5 mt-4">{{ meal.1 }}</h2>
+    <ul class="list-group list-group-flush">
+        {% for row in item_list %}
+        {% if row.meal_type == meal.0 %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            {% if row.status == 0 %}
+            <a href="{% url 'menu_item' row.pk %}">
+                <del>{{ row.meal }}</del>
+            </a>
+            {% else %}
+            <a href="{% url 'menu_item' row.pk %}">{{ row.meal }}</a>
+            {% endif %}
+            <span class="badge bg-primary rounded-pill">Price: ${{ row.price }}</span>
+        </li>
+        <li class="list-group-item">{{ row.description }}</li>
+        {% endif %}
+        {% endfor %}
+    </ul>
     {% endfor %}
-</body>
-</html>
+</div>
+{% endblock content %}
