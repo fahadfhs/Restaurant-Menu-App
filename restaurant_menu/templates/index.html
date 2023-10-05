@@ -13,10 +13,10 @@
             {% for row in item_list %} <!-- item_list is a special list in django-->
                 {% if row.meal_type == meal.0 %} <!--display only if the current meal type shown, avoids duplication-->
                    {% if row.status == 0 %}
-                        <h3><del>{{ row.meal}}</del></h3>
+                        <a href="{% url 'menu_item' row.pk %}"><h3><del>{{ row.meal}}</del></h3></a>
                         <p>{{ row.description}}</p>
                     {% else %}
-                        <h3>{{ row.meal}}</h3>
+                        <a href="https://example.com"><h3>{{ row.meal}}</h3></a>
                         <p>{{ row.description}}</p>
                     {% endif %}
                 {% endif %}
